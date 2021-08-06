@@ -27,5 +27,5 @@ export default class Pokemon {
   description: string;
 
   @Column()
-  isMyPokemon: boolean;
+  inMyPokemons: boolean;
 }

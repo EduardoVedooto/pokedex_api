@@ -18,25 +18,25 @@ export const getOne = async (id:number): Promise<Pokemon> => {
 export const addPokemon = async (id:number): Promise<void> => {
   const repository = getRepository(Pokemon);
 
-  const isMyPokemon = await validateID(id, repository);
+  const inMyPokemons = await validateID(id, repository);
 
-  if(isMyPokemon) return;
+  if(inMyPokemons) return;
   
-  await repository.update(id, { isMyPokemon: true });
+  await repository.update(id, { inMyPokemons: true });
 }
 
 export const removePokemon = async (id: number): Promise<void> => {
   const repository = getRepository(Pokemon);
 
-  const isMyPokemon = await validateID(id, repository);
+  const inMyPokemons = await validateID(id, repository);
 
-  if(!isMyPokemon) return;
+  if(!inMyPokemons) return;
 
-  await repository.update(id, { isMyPokemon: false });
+  await repository.update(id, { inMyPokemons: false });
 }
 
 const validateID = async (id: number, repository: Repository<Pokemon>): Promise<boolean> => {
   const result = await repository.findOne({ where: { id } });
   if(!result) throw new HttpException(`ID doesn't match with any pokémon from database`, 400);
-  return result.isMyPokemon;
+  return result.inMyPokemons;
 }
