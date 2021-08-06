@@ -23,7 +23,7 @@ export default class Pokemon {
   @Column()
   baseExp: number;
 
-  @Column()
+  @Column({nullable: true})
   description: string;
 
   @Column()
