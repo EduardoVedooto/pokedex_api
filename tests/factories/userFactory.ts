@@ -1,4 +1,5 @@
 import { getRepository } from "typeorm";
+import bcrypt from "bcrypt";
 
 import User from "../../src/entities/User";
 import { IUser } from "../../src/types/User";
@@ -10,5 +11,8 @@ export const userDefault: IUser = {
 }
 
 export async function createUser (user?: IUser) {
-  return await getRepository(User).insert(user||userDefault);
+  return await getRepository(User).insert({
+    email: user?.email || userDefault.email,
+    password: bcrypt.hashSync(user?.password || userDefault.password, 10)
+  });
 }
