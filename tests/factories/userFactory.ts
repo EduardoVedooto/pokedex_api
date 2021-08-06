@@ -1,14 +1,14 @@
 import { getRepository } from "typeorm";
 
 import User from "../../src/entities/User";
+import { IUser } from "../../src/types/User";
 
-export async function createUser () {
-  const user = await getRepository(User).create({
-    email: "email@email.com",
-    password: "123456"
-  });
+export const userDefault: IUser = {
+  email: 'test@email.com',
+  password: '123456',
+  confirmPassword: '123456'
+}
 
-  await getRepository(User).save(user);
-
-  return user;
+export async function createUser (user?: IUser) {
+  return await getRepository(User).insert(user||userDefault);
 }
