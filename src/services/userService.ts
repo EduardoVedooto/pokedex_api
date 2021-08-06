@@ -38,10 +38,7 @@ export const signin = async (body: IUserLogin): Promise<string> => {
   const sessionRepository = getRepository(Session);
   const token = uuid();
 
-  await sessionRepository.insert({
-    id: user.id,
-    token,
-  });
+  await sessionRepository.insert({ token, user });
 
   return token;
 }
